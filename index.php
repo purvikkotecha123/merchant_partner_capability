@@ -129,15 +129,15 @@
     </style>
 </head>
 <body>
-    <h1 style="text-align: center; color: #1e90ff; margin-bottom: 20px;">Country Product - Search</h1>
+    <h1 style="text-align: center; color: #1e90ff; margin-bottom: 20px;">Country / Product - Search</h1>
     <div class="merchant-selection">
         <h2>Select Merchant or Partner</h2>
         <div class="data-source">
             <label>
-                <input type="radio" name="dataSource" value="data1" checked> Merchant Data
+                <input type="radio" name="dataSource" value="data1" checked> Merchant
             </label>
             <label>
-                <input type="radio" name="dataSource" value="data2"> Partner Data
+                <input type="radio" name="dataSource" value="data2"> Partner
             </label>
         </div>
     </div>
@@ -203,7 +203,7 @@
 
                 // Clear existing options
                 listSelect.innerHTML = '<option value="">Select a country...</option>';
-                sublistSelect.innerHTML = '<option value="">Select a feature...</option>';
+                sublistSelect.innerHTML = '<option value="">Select a product...</option>';
 
                 // Populate countries dropdown
                 if (data && data.lists) {
@@ -327,7 +327,7 @@
         function populateDropdowns() {
             // Clear existing options
             listSelect.innerHTML = '<option value="">Select a country...</option>';
-            sublistSelect.innerHTML = '<option value="">Select a feature...</option>';
+            sublistSelect.innerHTML = '<option value="">Select a product...</option>';
 
             // Populate countries dropdown
             data.lists.forEach(list => {
