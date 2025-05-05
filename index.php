@@ -2,15 +2,25 @@
 <html>
 <head>
     <title>List Search</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
+        * {
+            font-family: 'Poppins', sans-serif;
+        }
+
         .merchant-selection {
             text-align: center;
-            margin: 20px 0;
-            padding: 15px;
+            margin: 30px auto;
+            padding: 25px;
             background: white;
-            border-radius: 8px;
-            border: 1px solid #87CEEB;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-radius: 16px;
+            border: none;
+            box-shadow: 0 4px 20px rgba(135, 206, 235, 0.15);
+            width: 80%;
+            transition: all 0.3s ease;
         }
         .merchant-selection h2 {
             color: #1e90ff;
@@ -39,22 +49,29 @@
             font-family: Arial, sans-serif;
         }
         .container { 
-            max-width: 600px; 
+            width: 80%;
             margin: 20px auto; 
-            padding: 20px;
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(135, 206, 235, 0.15);
+            transition: all 0.3s ease;
         }
         .search-box { 
             width: 100%; 
-            padding: 12px;
+            padding: 15px;
             margin-bottom: 2px;
-            border: 2px solid #87CEEB;
-            border-radius: 5px;
+            border: 2px solid rgba(135, 206, 235, 0.3);
+            border-radius: 12px;
             font-size: 16px;
             margin: 0 auto;
             display: block;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+        .search-box:focus {
+            border-color: #1e90ff;
+            box-shadow: 0 0 0 3px rgba(30, 144, 255, 0.1);
         }
         .dropdown-results { 
             border: 1px solid #87CEEB;
@@ -75,8 +92,17 @@
             margin: 10px auto;
             display: none;
             border-radius: 5px;
-            column-count: 2;
+            column-count: auto;
+            column-width: 280px;
             column-gap: 20px;
+            padding: 15px;
+        }
+        @media (max-width: 768px) {
+            .main-results {
+                width: 100%;
+                column-width: 100%;
+                padding: 10px;
+            }
         }
         .list-item[style*="font-weight: bold"] {
             column-span: all;
@@ -87,16 +113,46 @@
             font-size: 18px;
         }
         .list-item { 
-            padding: 12px; 
+            padding: 15px; 
             cursor: pointer;
-            border-bottom: 1px solid #e6f3ff;
-            transition: background-color 0.2s;
+            border-bottom: 1px solid rgba(230, 243, 255, 0.5);
+            transition: all 0.3s ease;
             break-inside: avoid;
             page-break-inside: avoid;
+            border-radius: 8px;
+            margin: 4px 0;
         }
         .list-item:hover {
-            background: #e6f3ff;
+            background: rgba(230, 243, 255, 0.5);
             color: #1e90ff;
+            transform: translateX(5px);
+        }
+        button {
+            padding: 12px 25px !important;
+            background-color: #1e90ff !important;
+            color: white !important;
+            border: none !important;
+            border-radius: 12px !important;
+            cursor: pointer !important;
+            font-weight: 500 !important;
+            transition: all 0.3s ease !important;
+            box-shadow: 0 4px 15px rgba(30, 144, 255, 0.2) !important;
+        }
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(30, 144, 255, 0.3) !important;
+        }
+        .data-source label {
+            padding: 10px 20px;
+            margin: 0 10px;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            background: rgba(230, 243, 255, 0.3);
+        }
+        .data-source label:hover {
+            background: rgba(30, 144, 255, 0.1);
+            transform: translateY(-2px);
         }
         .search-container {
             position: relative;
@@ -129,15 +185,18 @@
     </style>
 </head>
 <body>
-    <h1 style="text-align: center; color: #1e90ff; margin-bottom: 20px;">Country / Product - Search</h1>
+    <div style="text-align: center; color: white; margin-bottom: 20px; background: linear-gradient(135deg, #1e90ff, #00bfff); padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(30, 144, 255, 0.3);">
+        <h1>Country - Product Search</h1>
+        <p class="lead mb-0">Explore PayPal's product by Country</p>
+    </div>
     <div class="merchant-selection">
         <h2>Select Merchant or Partner</h2>
         <div class="data-source">
             <label>
-                <input type="radio" name="dataSource" value="data1" checked> Merchant
+                <input type="radio" name="dataSource" value="data1" checked> Merchant Data
             </label>
             <label>
-                <input type="radio" name="dataSource" value="data2"> Partner
+                <input type="radio" name="dataSource" value="data2"> Partner Data
             </label>
         </div>
     </div>
@@ -170,7 +229,7 @@
                     <button id="resetButton" style="padding: 8px 20px; background-color: #1e90ff; color: white; border: none; border-radius: 5px; cursor: pointer;">Reset</button>
                 </div>
                 <div style="margin-bottom: 10px; display: none;">
-                    <input type="text" id="searchInput" class="search-box" placeholder="Enter country or feature ...">
+                    <input type="text" id="searchInput" class="search-box" placeholder="Enter country or product ...">
                 </div>
             </div>
                 <div id="dropdownResults" class="dropdown-results results"></div>
